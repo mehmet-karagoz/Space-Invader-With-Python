@@ -47,6 +47,7 @@ bullet_state = "ready"
 # Score
 score = 0
 font = pygame.font.Font('freesansbold.ttf', 30)
+over_font = pygame.font.Font('freesansbold.ttf', 60)
 
 score_x = 10
 score_y = 10
@@ -73,6 +74,11 @@ def isCollision(bullet_x, bullet_y, enemy_x, enemy_y):
 def show_score():
     score_text = font.render("Score : " + str(score), True, (255, 255, 255))
     screen.blit(score_text, (score_x, score_y))
+
+
+def game_over():
+    over_text = over_font.render("GAME OVER", True, (255, 255, 255))
+    screen.blit(over_text, (200, 250))
 
 
 # game loop
@@ -108,6 +114,12 @@ while run:
         player_x = 736
 
     for i in range(num_of_enemy):
+
+        if enemy_y[i] > 440:
+            for j in range(num_of_enemy):
+                enemy_y[j] = 1000
+            game_over()
+            break
 
         enemy_x[i] += enemy_x_change[i]
 
